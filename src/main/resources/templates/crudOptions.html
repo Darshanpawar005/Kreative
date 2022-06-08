@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+ <head>
+ <title>Toy Store</title>
+ </head>
+ <body>
+ <!-- CREATE A NEW TOY -->
+ <h3>CREATE A NEW TOY</h3>
+ <form method="POST" th:object="${Toy}">
+ 
+ <label for="name">Name :</label>
+ <input type="text" name="name" value="" th:field="*{name}"/>
+ 
+ <label for="id">ID :</label>
+ <input type="text" name="id" value="" th:field="*{id}"/>
+ 
+ <label for="price">Price :</label>
+ <input type="text" name="price" value="" th:field="*{price}"/>
+ 
+ <input type="submit" value="Create a Toy"/>
+ 
+ </form >
+ 
+ <!-- LIST ALL TOYS -->
+ <h3>LIST ALL TOYS''</h3>
+ <div th:each="toy : ${Toys}">
+ <span th:text="${toy.name}"></span>
+ <span th:text="${toy.id}"></span>
+ <span th:text="${toy.price}"></span>
+ </div>
+ 
+ <!-- UPDATE TOP PRICING -->
+ <h3>UPDATE TOY PRICING</h3>
+  <div th:each="toy : ${Toys}">
+  
+  <form method="POST" th:action="@{/toyStore/updateToyPrice}" th:object="${Toy}" >
+
+ <input disabled type="text" th:value="${toy.name}" >
+ <input disabled type="text" th:value="${toy.id}" >
+
+ <input hidden type="text" th:name="name" th:value="${toy.name}" >
+ <input hidden type="text" th:name="id" th:value="${toy.id}" >
+ <input type="text" th:name="price" th:value="${toy.price}" >
+ <input type="submit" value="Update Price">
+  </form>
+ </div>
+ 
+ <!-- DELETE A TOY -->
+ <h3>DELETE A TOY</h3>
+ <div th:each="toy : ${Toys}">
+  
+  <form method="POST" th:action="@{/toyStore/deleteToy}" th:object="${Toy}" >
+
+ <input disabled type="text" th:value="${toy.name}" >
+ <input disabled type="text" th:value="${toy.id}" >
+ <input disabled type="text" th:value="${toy.price}" >
+
+ <input hidden type="text" th:name="name" th:value="${toy.name}" >
+ <input hidden type="text" th:name="id" th:value="${toy.id}" >
+ <input hidden type="text" th:name="price" th:value="${toy.price}" >
+ <input type="submit" value="Delete">
+  </form>
+ </div>
+ 
+ </body>
+</html>
